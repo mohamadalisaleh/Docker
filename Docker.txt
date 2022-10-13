@@ -1,0 +1,63 @@
+1. Using containers as portable command lines
+Create an image with AWS cli installed. 
+The image should be able to receive 2 environment variables: AWS SECRET ID, AWS SECRET ACCESS KEY.
+Create a user in AWS IAM and attach a policy that allows the user to upload files to s3 bucket.
+Create a file in your folder (host folder - not inside the container) and upload the file using the container
+ 
+ >> docker run amazon/aws-cli -e Aws_Access_key_ID = "AKIAZ5XMY2OSLDV4GG4D " -e Aws_Secret_Access_key = "  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 " aws s3 cp file s3://mohamad-bucket31/img.txt
+
+Bonus: Create a bash aliash to run the command.
+
+2. The the following image using the command:
+docker pull tomcat:9.0-jdk8-temurin-jammy
+What is the CMD set in this container? How did you find out?
+
+>>docker inspect MyTomcat
+
+>> "cmd" : [ " catalina.sh"
+	     " run" ]
+
+
+3. Remember you created a web site in EC2 using Wordpress?
+You assignment is to create the same thing just with containers.
+Run a wordpress container with a mariadb container in EC2 and make the web site accessible.
+Remember the web site needs to be resistent to reboot (when we reboot the server - no data is supposed to be lost)
+
+>> 54.242.153.56/wp-admin/
+
+4. Create a Dockerfile with your favorite python script running.
+The dockerfile needs to include all the requirements to run the script.
+The python script needs to be downloaded from Github evemorytime you rebuilt the image.
+
+"Dockerfile" : 
+FROM python:latest
+
+RUN mkdir -p /tmp/test && cd /tmp/test \
+&& git clone  https://github.com/mohamadalisaleh/Docker
+
+CMD ["python" , "/tmp/test/Docker/file2.py"]
+
+
+>> docker bulid . : Running The python file without changinig on the content of the code 
+>> docker build --no-cache. : Running The python file with changinig on the content of the code 
+
+
+Bonus: Try and change the python script in Github, an d rebuilt the image. Did the image get updated?
+What do you need to do to make this happen
+5. You need to migrate you newly created image using dockerfile from your laptop to the EC2 instance.
+How would you do that?
+Bonus: Find another way to do this.
+
+>>ubuntu@ip-172.31.18.147:~$ docker run -d -p 80:5000 training/webapp:latest python app.py
+>>ubuntu@ip-172.31.18.147:~$  docker run -d -p 80:80 --name mynginx nginx 
+
+6. What is a multistage build? And how can you use it?
+Please created a demonstration of the benefits.
+
+
+ >>multi-stage builds when we use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don’t want in the final image
+ 
+ 
+7. What happens when you delete a file in a RUN phase during the dockerfile build?
+It is really deleted?
+Bonus: How can you check file storage efficiency?
