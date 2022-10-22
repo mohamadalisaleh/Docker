@@ -1,0 +1,65 @@
+1. Make sure you have a virtualbox with Ubuntu installed.
+The machine must have at least 20GB of storage.
+If it does not have that, please reinstall the VM.
+
+2. Install Docker
+
+3. Install MiniKube:
+https://minikube.sigs.k8s.io/docs/start/
+
+4. Create a POD with Nginx using kubectl command
+
+>> kubectl create -f nginx 
+
+5. Create a POD with Nginx using a yaml file.
+
+>> kubectl create -f nginx.yml
+>> apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+
+6. Using kubectl port-forward access the nginx web page.
+
+>>kubectl port-forward pods/nginx 8080:80
+>> localhost:8080
+
+7. Edit the image of the container in the pod and deploy it.
+
+>> kubectl edit pods/nginx -o yaml
+
+8. Create a ClusterIP service and connect it to the pod.
+
+9. Create an external service (nodeport or loadbalancer) and connect it to the POD.
+
+>>  kubectl create service nodeport nginx --tcp=80:80
+
+10. Create a deployment instead of the pod.
+    - Why should we use deployment and not ReplicaSet or POD objects?
+
+>> kubectl create deployment nginx --image=nginx
+
+11. Connect your external services to the deployment.
+
+12. Scale your application to 3 instances.
+
+13. Go inside each pod and edit the index.html file and try to access the nginx web site. 
+    -  Did it change?
+
+14. Create a namespace for the new deployment and move the deployment created to that namespace.
+
+15. Can you use the same service to connect to the deployment now?
+
+16. Create a 3 yaml files that hold all the configuration created:
+    - Namespace
+    - Deployment
+    - Service
+
+Good luck!
