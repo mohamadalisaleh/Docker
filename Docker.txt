@@ -4,7 +4,7 @@ The image should be able to receive 2 environment variables: AWS SECRET ID, AWS 
 Create a user in AWS IAM and attach a policy that allows the user to upload files to s3 bucket.
 Create a file in your folder (host folder - not inside the container) and upload the file using the container
  
- >> docker run amazon/aws-cli -e Aws_Access_key_ID = "AKIAZ5XMY2OSLDV4GG4D " -e Aws_Secret_Access_key = "  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 " aws s3 cp file s3://mohamad-bucket31/img.txt
+ >> docker run amazon/aws-cli -e Aws_Access_key_ID = " " -e Aws_Secret_Access_key = "" aws s3 cp file s3://mohamad-bucket31/img.txt
 
 Bonus: Create a bash aliash to run the command.
 
